@@ -26,6 +26,7 @@ function validateConfig(): ServiceConfig {
     },
     bunpro: {
       baseUrl: 'https://api.bunpro.jp/api/frontend',
+      apiKey: getRequiredProperty('BUNPRO_API_KEY'),
     },
     jisho: {
       baseUrl: 'https://jisho.org',

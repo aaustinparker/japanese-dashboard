@@ -9,13 +9,17 @@ function getServiceUrl(service: Service): string {
 
 function getHeadersFor(service: Service): HeadersInit {
   switch(service) {
-    case 'wanikani':
-      return {
+    case 'wanikani': 
+     return {
         'Authorization': `Bearer ${config[service].apiKey}`,
         'Wanikani-Revision': `${config[service].apiVersion}`,
         'Content-Type': 'application/json; charset=utf-8',
       };
-    case 'bunpro': return {}
+    case 'bunpro':
+     return {
+        'Authorization': `Token token=${config[service].apiKey}`,
+        'Content-Type': 'application/json; charset=utf-8',
+      }
     case 'jisho': return {}
   }
 
