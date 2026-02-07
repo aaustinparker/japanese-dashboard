@@ -1,6 +1,6 @@
 'use client';
 
-export default function GoogleTab() {
+export default function Google() {
   return (
         <div id="google-container">
           <h1>Google Translate</h1>

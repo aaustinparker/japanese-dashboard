@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function BunproTab() {
+export default function Bunpro() {
   const [bunproGrammarCount, setBunproGrammarCount] = useState<number>(20);
   const [bunproVocabCount, setBunproVocabCount] = useState<number>(15);
 
