@@ -1,6 +1,7 @@
 import { fetchExternal } from "../api";
+import { Subject, User } from "./types";
 
-export function getUserInfo() : Promise<{ user: any }> {
+export function getUserInfo() : Promise<{ user: User }> {
     return fetchExternal('wanikani', 'user')
         .then(({data}) => ({
             user: {
@@ -15,7 +16,7 @@ export function getUserInfo() : Promise<{ user: any }> {
         })
 }
 
-export function getDueItems() : Promise<{ reviews: any[]; lessons: any[] }> {
+export function getDueItems() : Promise<{ reviews: Subject[]; lessons: Subject[] }> {
     return fetchExternal('wanikani', 'summary')
         .then((json) => {
             const reviewIds = json.data.reviews[0].subject_ids;
@@ -35,7 +36,7 @@ export function getDueItems() : Promise<{ reviews: any[]; lessons: any[] }> {
         })
 }
 
-export function getRecentMisses() : Promise<{ recentMisses: any[] }> {
+export function getRecentMisses() : Promise<{ recentMisses: Subject[] }> {
     const daysAgo = 7;
     const oneWeekAgoMidnightUtc = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
     oneWeekAgoMidnightUtc.setUTCHours(0, 0, 0, 0);
@@ -58,7 +59,7 @@ export function getRecentMisses() : Promise<{ recentMisses: any[] }> {
         })
 }
 
-export function getPastMisses() : Promise<{ pastMisses: any[] }> {
+export function getPastMisses() : Promise<{ pastMisses: Subject[] }> {
     const percentThreshold = 85;
     return fetchExternal('wanikani', `review_statistics?percentages_less_than=${percentThreshold}`)
         .then((json) => {
@@ -78,10 +79,10 @@ export function getPastMisses() : Promise<{ pastMisses: any[] }> {
         })
 }
 
-function getSubjectsById(subjectIds: number[]): Promise<any[]> {
+function getSubjectsById(subjectIds: number[]): Promise<Subject[]> {
     const batchSize = 100;
     const numBatches = Math.ceil(subjectIds.length / batchSize);
-    const fetches: Promise<any>[] = [];
+    const fetches: Promise<Subject[]>[] = [];
     
     for (let i = 0; i < numBatches; i++) {
         const batchIds = subjectIds.slice(i * batchSize, (i + 1) * batchSize);

@@ -24,3 +24,10 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@theme {
+  --color-wanikani-pink: #FF00AA;
+  --color-wanikani-blue: #00AAFF;
+  --color-bunpro-red: rgb(232, 88, 93);
+  --color-bunpro-light: rgb(223 190 190);
+}

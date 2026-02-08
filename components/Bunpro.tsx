@@ -19,10 +19,10 @@ export default function Bunpro() {
   return (
     <>
       <div id="bunpro-container">
-        <div id="bunpro-grammar-box" className="bunpro-box">
+        <div id="bunpro-grammar-box" className="bunpro-box bg-bunpro-red rounded-xl p-2 mr-2">
           <span>Bunpro Grammar: {bunproGrammarCount}</span>
         </div>
-        <div id="bunpro-vocab-box" className="bunpro-box">
+        <div id="bunpro-vocab-box" className="bunpro-box bg-bunpro-light rounded-xl p-2">
           <span>Bunpro Vocab: {bunproVocabCount}</span>
         </div>
       </div>
@@ -33,13 +33,6 @@ export default function Bunpro() {
           height: 100px;
           display: inline-block;
           color: rgb(32, 32,32);
-        }
-        #bunpro-grammar-box {
-          background: rgb(232, 88, 93);
-
-        }
-        #bunpro-vocab-box {
-          background: rgb(223 190 190);
         }
       `}</style>
 
