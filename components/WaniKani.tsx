@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Grid from '@mui/material/Grid';
 import StudyItem from "./StudyItem";
 import { Subject } from "@/lib/wanikani/types";
@@ -12,13 +12,14 @@ import Box from "@mui/material/Box";
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Divider from '@mui/material/Divider';
+import { Skeleton } from "@mui/material";
 
 export default function WaniKani() {
   const [reviews, setReviews] = useState<Subject[]>([]);
   const [lessons, setLessons] = useState<Subject[]>([]);
   const [recentMisses, setRecentMisses] = useState<Subject[]>([]);
   const [pastMisses, setPastMisses] = useState<Subject[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   type ViewType = 'lessons' | 'reviews' | 'recentMisses' | 'pastMisses';
   const [activeView, setActiveView] = useState<ViewType>('lessons');
@@ -35,6 +36,7 @@ export default function WaniKani() {
       setLessons(json.lessons);
       setRecentMisses(json.recentMisses);
       setPastMisses(json.pastMisses);
+      setLoading(false);
     }
     fetchSummary();
   }, []);
@@ -49,8 +51,8 @@ export default function WaniKani() {
     
   return (
     <div id="wanikani-container" className="w-full">
-      <div id="wanikani-item-boxes" className="w-full mb-4">
-        <div id="wanikani-lesson-box" className="w-4/10 bg-wanikani-pink inline-block text-white p-3 mr-1 rounded-xl">
+      <div id="wanikani-item-boxes" className="w-full mb-4 flex justify-center gap-1">
+        <div id="wanikani-lesson-box" className="w-2/5 bg-wanikani-pink inline-block text-white p-3 mr-1 rounded-xl">
           <Typography gutterBottom sx={{marginBottom:0}}>Today's</Typography>
           <Typography variant="h6" component="span">Lessons </Typography>
           <Typography component="span" className='bg-white text-wanikani-pink inline-block rounded-full px-2'>
@@ -71,7 +73,7 @@ export default function WaniKani() {
           </ThemeProvider>
         </div>
         
-        <div id="wanikani-review-box" className="w-4/10 bg-wanikani-blue inline-block text-white p-3 rounded-xl">
+        <div id="wanikani-review-box" className="w-2/5 bg-wanikani-blue inline-block text-white p-3 rounded-xl">
           <Typography gutterBottom sx={{marginBottom:0}}>Today's</Typography>
           <Typography variant="h6" component="span">Reviews </Typography>
           <Typography component="span" className='bg-white text-wanikani-blue inline-block rounded-full px-2'>
@@ -116,32 +118,36 @@ export default function WaniKani() {
       </div>
 
       <div id="wanikani-subject-container" className="my-4">
-        <Grid container spacing={2}>
-          {activeView === 'lessons' && lessons.map((lesson) => (
-            <Grid size={4} key={lesson.id}>
-              <StudyItem subject={lesson} />
-            </Grid>
-          ))}
+        {loading ? (
+            <Skeleton variant="rectangular" width="100%" height={400} />
+        ) : (
+          <Grid container spacing={2}>
+            {activeView === 'lessons' && lessons.map((lesson) => (
+              <Grid size={4} key={lesson.id}>
+                <StudyItem subject={lesson} />
+              </Grid>
+            ))}
 
-          {activeView === 'reviews' && reviews.map((review) => (
-            <Grid size={4} key={review.id}>
-              <StudyItem subject={review} />
-            </Grid>
-          ))}
+            {activeView === 'reviews' && reviews.map((review) => (
+              <Grid size={4} key={review.id}>
+                <StudyItem subject={review} />
+              </Grid>
+            ))}
 
-          {activeView === 'recentMisses' && recentMisses.map((miss) => (
-            <Grid size={4} key={miss.id}>
-              <StudyItem subject={miss} />
-            </Grid>
-          ))}
+            {activeView === 'recentMisses' && recentMisses.map((miss) => (
+              <Grid size={4} key={miss.id}>
+                <StudyItem subject={miss} />
+              </Grid>
+            ))}
 
-          {activeView === 'pastMisses' && pastMisses.map((miss) => (
-            <Grid size={4} key={miss.id}>
-              <StudyItem subject={miss} />
-            </Grid>
-          ))}
+            {activeView === 'pastMisses' && pastMisses.map((miss) => (
+              <Grid size={4} key={miss.id}>
+                <StudyItem subject={miss} />
+              </Grid>
+            ))}
 
-        </Grid>
+          </Grid>
+        )}
       </div>
 
     </div>
