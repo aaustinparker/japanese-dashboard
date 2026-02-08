@@ -8,10 +8,24 @@ import Button from "@mui/material/Button";
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Box from "@mui/material/Box";
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
 
 export default function WaniKani() {
   const [reviews, setReviews] = useState<Subject[]>([]);
   const [lessons, setLessons] = useState<Subject[]>([]);
+  const [recentMisses, setRecentMisses] = useState<Subject[]>([]);
+  const [pastMisses, setPastMisses] = useState<Subject[]>([]);
+
+  type ViewType = 'lessons' | 'reviews' | 'recentMisses' | 'pastMisses';
+  const [activeView, setActiveView] = useState<ViewType>('lessons');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setActiveView(event.target.value as ViewType);
+  };
 
   useEffect(() => {
     async function fetchSummary() {
@@ -19,6 +33,8 @@ export default function WaniKani() {
       const json = await response.json();
       setReviews(json.reviews);
       setLessons(json.lessons);
+      setRecentMisses(json.recentMisses);
+      setPastMisses(json.pastMisses);
     }
     fetchSummary();
   }, []);
@@ -77,13 +93,54 @@ export default function WaniKani() {
         </div>
       </div>
 
-      <div id="wani-card-container">
+      <div id="wanikani-view-select-container" className="flex items-center mb-4 mt-10">
+        <Box>
+          <Typography component="span" gutterBottom>
+            Currently viewing:&nbsp;&nbsp;
+          </Typography>
+        </Box>
+        <Box className="inline-block min-w-[150px]">
+          <FormControl fullWidth>
+            <Select
+              id="wanikani-view-select"
+              value={activeView}
+              onChange={handleChange}
+            >
+              <MenuItem value={'lessons'}>Lessons</MenuItem>
+              <MenuItem value={'reviews'}>Reviews</MenuItem>
+              <MenuItem value={'recentMisses'}>Recently Missed</MenuItem>
+              <MenuItem value={'pastMisses'}>Critical Items</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
+
+      <div id="wanikani-subject-container" className="my-4">
         <Grid container spacing={2}>
-          {reviews.map((review) => (
+          {activeView === 'lessons' && lessons.map((lesson) => (
+            <Grid size={4} key={lesson.id}>
+              <StudyItem subject={lesson} />
+            </Grid>
+          ))}
+
+          {activeView === 'reviews' && reviews.map((review) => (
             <Grid size={4} key={review.id}>
               <StudyItem subject={review} />
             </Grid>
           ))}
+
+          {activeView === 'recentMisses' && recentMisses.map((miss) => (
+            <Grid size={4} key={miss.id}>
+              <StudyItem subject={miss} />
+            </Grid>
+          ))}
+
+          {activeView === 'pastMisses' && pastMisses.map((miss) => (
+            <Grid size={4} key={miss.id}>
+              <StudyItem subject={miss} />
+            </Grid>
+          ))}
+
         </Grid>
       </div>
 

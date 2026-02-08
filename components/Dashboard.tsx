@@ -20,12 +20,12 @@ export default function Dashboard() {
 
   return (
     <> 
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography className="text-center" variant="h4" component="h1" gutterBottom>
         Japanese Learning Dashboard
       </Typography>
       <div id="dashboard-container" className="w-full">
           <Box id="dashboard-tabs" className="flex items-center justify-around"> 
-              <Tabs value={activeTab} onChange={handleTabChange} aria-label="basic tabs example">
+              <Tabs value={activeTab} onChange={handleTabChange}>
                 <Tab label="Wani Kani"/>
                 <Tab label="Bunpro" />
                 <Tab label="Jisho" />
@@ -33,7 +33,7 @@ export default function Dashboard() {
               </Tabs>
           </Box>
           
-          <div id="dashboard-content">
+          <div id="dashboard-content" className='mt-4'>
             <TabContent myIndex={0} activeIndex={activeTab}>
               <WaniKani />
             </TabContent>
@@ -48,12 +48,6 @@ export default function Dashboard() {
             </TabContent>
           </div>
       </div>
-
-      <style jsx>{`
-        #dashboard-content {
-          margin-top: 20px;
-        }
-      `}</style>
     </>
   );
 

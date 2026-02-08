@@ -36,7 +36,7 @@ export default function StudyItem( {subject}: {subject: Subject}) {
           groupReadingsByType(subject.data.readings)
         ).map(([type, readings], idx) => (
           <Typography sx={{color: 'text.secondary' }} key={idx}>
-            {type && `${type}:`}
+            {type && `${type}: `}
             {(readings as any[]).map((r, i) => (
               <span key={i}>
                 {r.primary ? <strong>{r.reading}</strong> : r.reading}
