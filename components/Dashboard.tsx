@@ -6,9 +6,17 @@ import WaniKani from "@/components/WaniKani";
 import Bunpro from "@/components/Bunpro";
 import Jisho from "@/components/Jisho";
 import Typography from '@mui/material/Typography';
+import TabContent from "./TabContent";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import { Box } from "@mui/material";
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState<"jisho" | "bunpro" | "wanikani" | "google">("wanikani");
+  const [activeTab, setActiveTab] = useState<number>(0);
+
+  const handleTabChange = (event: React.SyntheticEvent, newTab: number) => {
+    setActiveTab(newTab);
+  }
 
   return (
     <> 
@@ -16,26 +24,28 @@ export default function Dashboard() {
         Japanese Learning Dashboard
       </Typography>
       <div id="dashboard-container" className="w-full">
-          <div id="dashboard-tabs" className="flex items-center justify-around">  
-              <div className="flex-col"><button onClick={() => setActiveTab("wanikani")}>Wani Kani</button></div>
-              <div className="flex-col"><button onClick={() => setActiveTab("bunpro")}>Bunpro</button></div>
-              <div className="flex-col"><button onClick={() => setActiveTab("jisho")}>Jisho</button></div>
-              <div className="flex-col"><button onClick={() => setActiveTab("google")}>Google Translate</button></div>
-          </div>
+          <Box id="dashboard-tabs" className="flex items-center justify-around"> 
+              <Tabs value={activeTab} onChange={handleTabChange} aria-label="basic tabs example">
+                <Tab label="Wani Kani"/>
+                <Tab label="Bunpro" />
+                <Tab label="Jisho" />
+                <Tab label="Google" />
+              </Tabs>
+          </Box>
           
           <div id="dashboard-content">
-            <div style={{ display: activeTab === "wanikani" ? "block" : "none" }}>
+            <TabContent myIndex={0} activeIndex={activeTab}>
               <WaniKani />
-            </div>
-            <div style={{ display: activeTab === "bunpro" ? "block" : "none" }}>
+            </TabContent>
+            <TabContent myIndex={1} activeIndex={activeTab}>
               <Bunpro />
-            </div>
-            <div style={{ display: activeTab === "jisho" ? "block" : "none" }}>
+            </TabContent>
+            <TabContent myIndex={2} activeIndex={activeTab}>
               <Jisho />
-            </div>
-            <div style={{ display: activeTab === "google" ? "block" : "none" }}>
+            </TabContent>
+            <TabContent myIndex={3} activeIndex={activeTab}>
               <Google />
-            </div>
+            </TabContent>
           </div>
       </div>
 

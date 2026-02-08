@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Grid from '@mui/material/Grid';
 import StudyItem from "./StudyItem";
 import { Subject } from "@/lib/wanikani/types";
-import { Button, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -28,7 +29,7 @@ export default function WaniKani() {
           main: '#FFF'
         }
       }
-    });
+  });
     
   return (
     <div id="wanikani-container" className="w-full">
