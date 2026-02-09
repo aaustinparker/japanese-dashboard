@@ -30,4 +30,5 @@ body {
   --color-wanikani-blue: #00AAFF;
   --color-bunpro-red: rgb(232, 88, 93);
   --color-bunpro-light: rgb(223 190 190);
+  --color-bunpro-dark: rgb(32, 32,32);
 }
