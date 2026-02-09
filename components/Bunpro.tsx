@@ -8,11 +8,22 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { BarChart } from "@mui/x-charts/BarChart";
 import { TotalProgress } from "@/lib/bunpro/types";
 import { Skeleton } from "@mui/material";
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function Bunpro() {
   const [grammarDue, setGrammarDue] = useState<number>(0);
   const [vocabDue, setVocabDue] = useState<number>(0);
   const [totalProgress, setTotalProgress] = useState<TotalProgress|undefined>(undefined);
+
+  type ViewType = 'grammarChart' | 'vocabChart';
+  const [activeView, setActiveView] = useState<ViewType>('grammarChart');
+
+  const handleViewChange = (event: SelectChangeEvent) => {
+    setActiveView(event.target.value as ViewType);
+  };
 
   useEffect(() => {
     async function fetchSummary() {
@@ -64,7 +75,7 @@ export default function Bunpro() {
             {vocabDue}
           </Typography>
           <Typography className='block' sx={{marginTop:'0.5em'}} gutterBottom>
-            Learning new words.
+            Study new words.
           </Typography>
           <ThemeProvider theme={buttonTheme}>
             <Button 
@@ -79,12 +90,32 @@ export default function Bunpro() {
         </div>
       </div>
 
+      <div id="bunpro-view-select-container" className="flex items-center mb-4 mt-10">
+        <Box>
+          <Typography component="span" gutterBottom>
+            Currently viewing:&nbsp;&nbsp;
+          </Typography>
+        </Box>
+        <Box className="inline-block min-w-[150px]">
+          <FormControl fullWidth>
+            <Select
+              id="bunpro-view-select"
+              value={activeView}
+              onChange={handleViewChange}
+            >
+              <MenuItem value={'grammarChart'}>Grammar Chart</MenuItem>
+              <MenuItem value={'vocabChart'}>Vocab Chart</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
       
-      <div id="bunpro-chart-container" className="mt-10">
+      <div id="bunpro-chart-container">
         {!totalProgress ? (
             <Skeleton variant="rectangular" width="100%" height={400} />
           ) : (
-          <>
+        <>
+          {activeView === 'grammarChart' && (
             <div id="bunpro-grammar-chart">
               <Typography className="text-center" variant="h6" component="h2" gutterBottom>
                 Grammar Progress By Level
@@ -103,7 +134,9 @@ export default function Bunpro() {
                 height={300}
               />
             </div>
+          )}
 
+          {activeView === 'vocabChart' && (
             <div id="bunpro-vocab-chart" className="mt-10">
               <Typography className="text-center" variant="h6" component="h2" gutterBottom>
                 Vocab Progress By Level
@@ -122,7 +155,8 @@ export default function Bunpro() {
                 height={300}
               />
             </div>
-          </>
+          )}
+        </>
         )}
 
       </div>

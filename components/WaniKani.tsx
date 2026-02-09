@@ -24,7 +24,7 @@ export default function WaniKani() {
   type ViewType = 'lessons' | 'reviews' | 'recentMisses' | 'pastMisses';
   const [activeView, setActiveView] = useState<ViewType>('lessons');
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleViewChange = (event: SelectChangeEvent) => {
     setActiveView(event.target.value as ViewType);
   };
 
@@ -106,7 +106,7 @@ export default function WaniKani() {
             <Select
               id="wanikani-view-select"
               value={activeView}
-              onChange={handleChange}
+              onChange={handleViewChange}
             >
               <MenuItem value={'lessons'}>Lessons</MenuItem>
               <MenuItem value={'reviews'}>Reviews</MenuItem>
