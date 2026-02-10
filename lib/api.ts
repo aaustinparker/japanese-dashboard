@@ -20,7 +20,6 @@ function getHeadersFor(service: Service): HeadersInit {
         'Authorization': `Token token=${config[service].apiKey}`,
         'Content-Type': 'application/json; charset=utf-8',
       }
-    case 'jisho': return {}
   }
 
 }

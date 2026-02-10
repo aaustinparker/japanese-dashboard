@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from "react";
-import Google from "@/components/Google";
+import Translate from "@/components/Translate";
 import WaniKani from "@/components/WaniKani";
 import Bunpro from "@/components/Bunpro";
-import Jisho from "@/components/Jisho";
 import Typography from '@mui/material/Typography';
 import TabContent from "./TabContent";
 import Tab from "@mui/material/Tab";
@@ -28,8 +27,7 @@ export default function Dashboard() {
               <Tabs value={activeTab} onChange={handleTabChange}>
                 <Tab label="Wani Kani"/>
                 <Tab label="Bunpro" />
-                <Tab label="Jisho" />
-                <Tab label="Google" />
+                <Tab label="Translate" />
               </Tabs>
           </Box>
           
@@ -41,10 +39,7 @@ export default function Dashboard() {
               <Bunpro />
             </TabContent>
             <TabContent myIndex={2} activeIndex={activeTab}>
-              <Jisho />
-            </TabContent>
-            <TabContent myIndex={3} activeIndex={activeTab}>
-              <Google />
+              <Translate />
             </TabContent>
           </div>
       </div>
