@@ -12,11 +12,13 @@ import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import {Gauge, gaugeClasses} from "@mui/x-charts/Gauge";
 
 export default function Bunpro() {
   const [grammarDue, setGrammarDue] = useState<number>(0);
   const [vocabDue, setVocabDue] = useState<number>(0);
   const [totalProgress, setTotalProgress] = useState<TotalProgress|undefined>(undefined);
+  const [level, setLevel] = useState<number>(0);
 
   type ViewType = 'grammarChart' | 'vocabChart';
   const [activeView, setActiveView] = useState<ViewType>('grammarChart');
@@ -32,6 +34,7 @@ export default function Bunpro() {
       setGrammarDue(json.grammarDue);
       setVocabDue(json.vocabDue);
       setTotalProgress(json.totalProgress);
+      setLevel(Math.min(100, json.level)); // max level sometimes returned as 101
     }
     fetchSummary();
   }, []);
@@ -90,24 +93,50 @@ export default function Bunpro() {
         </div>
       </div>
 
-      <div id="bunpro-view-select-container" className="flex items-center mb-4 mt-10">
-        <Box>
-          <Typography component="span" gutterBottom>
-            Currently viewing:&nbsp;&nbsp;
-          </Typography>
-        </Box>
-        <Box className="inline-block min-w-[150px]">
-          <FormControl fullWidth>
-            <Select
-              id="bunpro-view-select"
-              value={activeView}
-              onChange={handleViewChange}
-            >
-              <MenuItem value={'grammarChart'}>Grammar Chart</MenuItem>
-              <MenuItem value={'vocabChart'}>Vocab Chart</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+      <div className="w-full flex justify-between mt-10 mb-4">
+        <div id="bunpro-view-select-container" className="flex items-center">
+          <Box>
+            <Typography component="span" gutterBottom>
+              Currently viewing:&nbsp;&nbsp;
+            </Typography>
+          </Box>
+          <Box className="inline-block min-w-[150px]">
+            <FormControl fullWidth>
+              <Select
+                id="bunpro-view-select"
+                value={activeView}
+                onChange={handleViewChange}
+              >
+                <MenuItem value={'grammarChart'}>Grammar Chart</MenuItem>
+                <MenuItem value={'vocabChart'}>Vocab Chart</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+
+        <div id="bunpro-level-container" className="flex items-center">
+          <Box>
+            <Typography component="span" gutterBottom>
+              Current Level:
+            </Typography>
+          </Box>
+          <Box id="bunpro-level-gauge">
+            <Gauge 
+              width={70}
+              height={70}
+              innerRadius="80%"
+              outerRadius="100%"
+              valueMin={0}
+              valueMax={100}
+              value={level}
+              sx={{
+                [`& .${gaugeClasses.valueArc}`]: {
+                  fill: 'var(--color-bunpro-red)',
+                },
+              }}
+            />
+          </Box>
+        </div>
       </div>
       
       <div id="bunpro-chart-container">

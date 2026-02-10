@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Grid from '@mui/material/Grid';
 import StudyItem from "./StudyItem";
 import { Subject } from "@/lib/wanikani/types";
@@ -13,12 +13,14 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Skeleton } from "@mui/material";
+import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 
 export default function WaniKani() {
   const [reviews, setReviews] = useState<Subject[]>([]);
   const [lessons, setLessons] = useState<Subject[]>([]);
   const [recentMisses, setRecentMisses] = useState<Subject[]>([]);
   const [pastMisses, setPastMisses] = useState<Subject[]>([]);
+  const [level, setLevel] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
   type ViewType = 'lessons' | 'reviews' | 'recentMisses' | 'pastMisses';
@@ -36,6 +38,7 @@ export default function WaniKani() {
       setLessons(json.lessons);
       setRecentMisses(json.recentMisses);
       setPastMisses(json.pastMisses);
+      setLevel(json.user.level);
       setLoading(false);
     }
     fetchSummary();
@@ -51,6 +54,7 @@ export default function WaniKani() {
     
   return (
     <div id="wanikani-container" className="w-full">
+
       <div id="wanikani-item-boxes" className="w-full mb-4 flex justify-center gap-1">
         <div id="wanikani-lesson-box" className="w-2/5 bg-wanikani-pink inline-block text-white p-3 mr-1 rounded-xl">
           <Typography gutterBottom sx={{marginBottom:0}}>Today's</Typography>
@@ -95,26 +99,52 @@ export default function WaniKani() {
         </div>
       </div>
 
-      <div id="wanikani-view-select-container" className="flex items-center mb-4 mt-10">
-        <Box>
-          <Typography component="span" gutterBottom>
-            Currently viewing:&nbsp;&nbsp;
-          </Typography>
-        </Box>
-        <Box className="inline-block min-w-[150px]">
-          <FormControl fullWidth>
-            <Select
-              id="wanikani-view-select"
-              value={activeView}
-              onChange={handleViewChange}
-            >
-              <MenuItem value={'lessons'}>Lessons</MenuItem>
-              <MenuItem value={'reviews'}>Reviews</MenuItem>
-              <MenuItem value={'recentMisses'}>Recently Missed</MenuItem>
-              <MenuItem value={'pastMisses'}>Critical Items</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+      <div className="w-full flex justify-between mt-10 mb-4">
+        <div id="wanikani-view-select-container" className="flex items-center">
+          <Box>
+            <Typography component="span" gutterBottom>
+              Currently viewing:&nbsp;&nbsp;
+            </Typography>
+          </Box>
+          <Box className="inline-block min-w-[150px]">
+            <FormControl fullWidth>
+              <Select
+                id="wanikani-view-select"
+                value={activeView}
+                onChange={handleViewChange}
+              >
+                <MenuItem value={'lessons'}>Lessons</MenuItem>
+                <MenuItem value={'reviews'}>Reviews</MenuItem>
+                <MenuItem value={'recentMisses'}>Recently Missed</MenuItem>
+                <MenuItem value={'pastMisses'}>Critical Items</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+
+        <div id="wanikani-level-container" className="flex items-center">
+          <Box>
+            <Typography component="span" gutterBottom>
+              Current Level:
+            </Typography>
+          </Box>
+          <Box id="wanikani-level-gauge">
+            <Gauge 
+              width={70}
+              height={70}
+              innerRadius="80%"
+              outerRadius="100%"
+              valueMin={0}
+              valueMax={60}
+              value={level}
+              sx={{
+                [`& .${gaugeClasses.valueArc}`]: {
+                  fill: 'var(--color-wanikani-blue)',
+                },
+              }}
+            />
+          </Box>
+        </div>
       </div>
 
       <div id="wanikani-subject-container" className="my-4">
