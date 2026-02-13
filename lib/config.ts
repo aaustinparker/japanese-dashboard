@@ -8,14 +8,8 @@ export type ServiceConfig = {
     apiVersion?: string;
   };
 };
-
-let config: ServiceConfig;
-try {
-  config = validateConfig();
-} catch (error) {
-  console.error('Configuration Error:', (error as Error).message);
-  process.exit(1);
-}
+ 
+let config: ServiceConfig | null = null;
 
 function validateConfig(): ServiceConfig {
   return {
@@ -35,11 +29,18 @@ function getRequiredProperty(key: string): string {
   const value = process.env[key];
   if (!value) {
     throw new Error(
-      `Missing required environment variable: ${key}. ` +
-      `Please add it to your .env.local file.`
+      `Missing a required environment variable: ${key}. ` +
+      'Pass it with the -e flag when running the Docker container.'
     );
   }
   return value;
 }
 
-export { config };
+// return a singleton config object, validating it on first access
+export function getConfig(): ServiceConfig {
+  if (!config) {
+    config = validateConfig();
+  }
+
+  return config;
+}

@@ -1,13 +1,15 @@
 
 
-import { config, Service } from './config';
+import { getConfig, Service } from './config';
 
 
 function getServiceUrl(service: Service): string {
+  const config = getConfig();
   return config[service].baseUrl;
 }
 
 function getHeadersFor(service: Service): HeadersInit {
+  const config = getConfig();
   switch(service) {
     case 'wanikani': 
      return {

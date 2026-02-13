@@ -3,3 +3,4 @@
 .env*
 next-env.d.ts
 _samples/
+.git/
