@@ -17,7 +17,7 @@ COPY package*.json requirements.txt ./
 
 # Install dependencies
 RUN npm ci
-# RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy startup script
 COPY startup.sh .

@@ -29,7 +29,7 @@ function getRequiredProperty(key: string): string {
   const value = process.env[key];
   if (!value) {
     throw new Error(
-      `Missing a required environment variable: ${key}. ` +
+      `Missing required environment variable: ${key}. ` +
       'Pass it with the -e flag when running the Docker container.'
     );
   }
