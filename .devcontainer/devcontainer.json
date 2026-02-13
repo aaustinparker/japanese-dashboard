@@ -1,0 +1,16 @@
+
+{
+  "name": "Japanese Dashboard",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "humao.rest-client"
+      ]
+    }
+  },
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm ci && pip install -r requirements.txt"
+}
