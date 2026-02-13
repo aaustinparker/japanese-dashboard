@@ -1,0 +1,65 @@
+### Variables
+@apiKey = <your API key here>
+@auth = Authorization: Token token={{apiKey}}
+@baseUrl = https://api.bunpro.jp/api/frontend
+@contentType = Content-Type: application/json; charset=utf-8
+
+
+### User details (level, etc.)
+GET {{baseUrl}}/user
+{{contentType}}
+{{auth}}
+
+
+### Total due (vocab & grammar)
+GET {{baseUrl}}/user/due
+{{contentType}}
+{{auth}}
+
+
+### Total completed (vocab & grammar)
+GET {{baseUrl}}/user_stats/srs_level_overview
+{{contentType}}
+{{auth}}
+
+
+### Base stats (days studied, current streak, etc.)
+GET {{baseUrl}}/user_stats/base_stats
+{{contentType}}
+{{auth}}
+
+
+### JLPT progress
+GET {{baseUrl}}/user_stats/jlpt_progress_mixed
+{{contentType}}
+{{auth}}
+
+
+### Next quiz preview
+GET {{baseUrl}}/reviews/quiz_index?only_review=GrammarPoint
+{{contentType}}
+{{auth}}
+
+
+### Queue info
+GET {{baseUrl}}/user/queue
+{{contentType}}
+{{auth}}
+
+
+### Search for terms
+POST {{baseUrl}}/search/reviewables_v1_1
+{{contentType}}
+{{auth}}
+
+{
+    "query": "shidai",
+    "is_searching_grammar": true,
+    "is_searching_vocab": true,
+    "options": {
+        "include_reviews": true,
+        "include_notes": true,
+        "include_bookmarks": true,
+        "only_bookmarks": false
+    }
+}

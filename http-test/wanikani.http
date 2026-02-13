@@ -1,0 +1,56 @@
+### Variables
+@apiKey = <your API key here>
+@auth = Authorization: Bearer {{apiKey}}
+@baseUrl = https://api.wanikani.com/v2
+@revision = Wanikani-Revision: 20170710
+@contentType = Content-Type: application/json; charset=utf-8
+
+
+### Lessons
+GET {{baseUrl}}/assignments?immediately_available_for_lessons
+{{contentType}}
+{{auth}}
+{{revision}}
+
+
+### Reviews
+GET {{baseUrl}}/assignments?immediately_available_for_review
+{{contentType}}
+{{auth}}
+{{revision}}
+
+
+### Subject lookup (can append ID)
+GET {{baseUrl}}/subjects
+{{contentType}}
+{{auth}}
+{{revision}}
+
+
+### User
+GET {{baseUrl}}/user
+{{contentType}}
+{{auth}}
+{{revision}}
+
+
+### Due lessons & reviews
+GET {{baseUrl}}/summary
+{{contentType}}
+{{auth}}
+{{revision}}
+
+
+### Critical items
+GET {{baseUrl}}/review_statistics?percentages_less_than=85&updated_after=2026-01-26T00:00:00.000Z
+{{contentType}}
+{{auth}}
+{{revision}}
+
+
+### Search for terms, then parse info from HTML response
+### .subject-character__characters-text, .subject-character__reading, .subject-character__meaning
+GET https://wanikani.com/search?query=atoll
+{{contentType}}
+{{auth}}
+{{revision}}
