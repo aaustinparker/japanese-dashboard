@@ -32,3 +32,7 @@ body {
   --color-bunpro-light: rgb(223 190 190);
   --color-bunpro-dark: rgb(32, 32,32);
 }
+
+#main-content {
+  width: min(90vw, 900px);
+}
