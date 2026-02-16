@@ -12,6 +12,9 @@ RUN apt-get update \
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+# Explicit versions for LibreTranslate compatibility
+RUN pip install --upgrade "pip==24.2" "setuptools==68.2.2" "wheel==0.44.0"
+
 # Copy manifests
 COPY package*.json requirements.txt ./
 
