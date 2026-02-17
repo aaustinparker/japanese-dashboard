@@ -35,9 +35,8 @@ export default function Translate() {
   const displayRows = 10;
   const debounceMillis = 1000;
 
-  // effects and handlers
+  // only send API request after user has stopped typing for a bit
   useEffect(() => {
-    // only send API request after user has stopped typing for a bit
     const pid = setTimeout(() => {
       setDebounceText(translation.sourceText);
     }, debounceMillis);
@@ -64,7 +63,7 @@ export default function Translate() {
       setTranslation(prev => ({ ...prev, translatedText: '' }));
       return;
     }
-    const res = await fetch('http://localhost:5000/translate', {
+    const res = await fetch('/api/translate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,8 +74,13 @@ export default function Translate() {
         target: translation.to,
       }),
     });
-    const data = await res.json();
-    setTranslation(prev => ({ ...prev, translatedText: data.translatedText }));
+
+    if (res.ok) {
+      const json = await res.json();
+      setTranslation(prev => ({ ...prev, translatedText: json.translatedText }));
+    } else {
+      setTranslation(prev => ({ ...prev, translatedText: '' }));
+    }
   }
 
   return (

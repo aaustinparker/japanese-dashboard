@@ -1,5 +1,5 @@
 
-export type Service = 'wanikani' | 'bunpro';
+export type Service = 'wanikani' | 'bunpro' | 'translate';
 
 export type ServiceConfig = {
   [K in Service]: {
@@ -21,6 +21,9 @@ function validateConfig(): ServiceConfig {
     bunpro: {
       baseUrl: 'https://api.bunpro.jp/api/frontend',
       apiKey: getRequiredProperty('BUNPRO_API_KEY'),
+    },
+    translate: {
+      baseUrl: 'http://0.0.0.0:5000',
     },
   };
 }

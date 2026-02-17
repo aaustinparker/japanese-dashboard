@@ -21,15 +21,23 @@ function getHeadersFor(service: Service): HeadersInit {
      return {
         'Authorization': `Token token=${config[service].apiKey}`,
         'Content-Type': 'application/json; charset=utf-8',
-      }
+      };
+    case 'translate':
+     return {
+        'Content-Type': 'application/json; charset=utf-8',
+     }
   }
 
 }
 
-export async function fetchExternal(service: Service, targetUrl: string): Promise<any> {
+export async function fetchExternal(service: Service, targetUrl: string, requestBody?: any): Promise<any> {
   const serviceUrl = getServiceUrl(service);
   const response = await fetch(`${serviceUrl}/${targetUrl}`,
-    {  headers: getHeadersFor(service) }
+    {  
+      headers: getHeadersFor(service), 
+      method: requestBody ? 'POST' : 'GET',
+      body: requestBody ? JSON.stringify(requestBody) : undefined, 
+    }
   )
 
   if (!response.ok) {
