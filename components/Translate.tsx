@@ -87,7 +87,7 @@ export default function Translate() {
     <div id="translation-container"  className="flex items-center">
 
       <div id="source-text-container" className="w-2/5">
-        <Typography variant="h5" className="text-center">{languageName[translation.from]}</Typography>
+        <Typography variant="h5" sx={{fontWeight: 'bold'}} className="text-center">{languageName[translation.from]}</Typography>
         <TextField
           id="source-text"
           label="Your text"
@@ -95,7 +95,7 @@ export default function Translate() {
           rows={displayRows}
           value={translation.sourceText}
           onChange={(e) => setTranslation(prev => ({ ...prev, sourceText: e.target.value }))}
-          variant="filled"
+          variant="outlined"
           className="w-full"
           slotProps={{
             input: {
@@ -108,20 +108,24 @@ export default function Translate() {
           sx={{
             [`.${inputBaseClasses.root}`]: {
               alignItems: 'end',
+              fontSize: '1.2rem',
             },
             [`.${inputAdornmentClasses.root}`]: {
               fontSize: '.75rem',
+            },
+            [`.${inputBaseClasses.focused} .${inputAdornmentClasses.root}`]: {
+              color: 'primary.main',
             },
           }}
         />
       </div>
 
-      <div id="swap-language-container" className="text-5xl w-1/5 flex justify-center items-center">
+      <div id="swap-language-container" className="text-6xl w-1/5 flex justify-center items-center">
         <SwapHorizIcon onClick={swapLanguages} className="cursor-pointer" fontSize="inherit" />
       </div>
 
       <div id="translation-container" className="w-2/5">
-        <Typography variant="h5" className="text-center">{languageName[translation.to]}</Typography>
+        <Typography variant="h5" sx={{fontWeight: 'bold'}} className="text-center">{languageName[translation.to]}</Typography>
         <TextField
           id="translation-text"
           label="Translation"
@@ -132,6 +136,11 @@ export default function Translate() {
           onChange={(e) => setTranslation(prev => ({ ...prev, translatedText: e.target.value }))}
           variant="filled"
           className="w-full"
+          sx={{
+            [`.${inputBaseClasses.root}`]: {
+              fontSize: '1.2rem',
+            },
+          }}
         />
       </div>
 
