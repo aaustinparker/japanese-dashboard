@@ -48,6 +48,7 @@ RUN npm ci --omit=dev
 
 # Copy runtime essentials
 COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
 COPY --from=builder /app/startup.sh ./
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"

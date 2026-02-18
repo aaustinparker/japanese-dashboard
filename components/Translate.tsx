@@ -84,9 +84,9 @@ export default function Translate() {
   }
 
   return (
-    <div id="translation-container"  className="flex items-center">
+    <div id="translation-container"  className="flex items-start">
 
-      <div id="source-text-container" className="w-2/5">
+      <div id="source-text-container" className="flex-1">
         <Typography variant="h5" sx={{fontWeight: 'bold'}} className="text-center">{languageName[translation.from]}</Typography>
         <TextField
           id="source-text"
@@ -106,6 +106,7 @@ export default function Translate() {
             }
           }}
           sx={{
+            marginTop: '0.25rem',
             [`.${inputBaseClasses.root}`]: {
               alignItems: 'end',
               fontSize: '1.2rem',
@@ -120,11 +121,11 @@ export default function Translate() {
         />
       </div>
 
-      <div id="swap-language-container" className="text-6xl w-1/5 flex justify-center items-center">
+      <div id="swap-language-container" className="text-4xl flex-none flex justify-center items-center px-4">
         <SwapHorizIcon onClick={swapLanguages} className="cursor-pointer" fontSize="inherit" />
       </div>
 
-      <div id="translation-container" className="w-2/5">
+      <div id="translation-container" className="flex-1">
         <Typography variant="h5" sx={{fontWeight: 'bold'}} className="text-center">{languageName[translation.to]}</Typography>
         <TextField
           id="translation-text"
@@ -137,6 +138,7 @@ export default function Translate() {
           variant="filled"
           className="w-full"
           sx={{
+            marginTop: '0.25rem',
             [`.${inputBaseClasses.root}`]: {
               fontSize: '1.2rem',
             },
