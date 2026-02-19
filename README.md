@@ -1,8 +1,7 @@
 # japanese-dashboard
-A dashboard that glues together your Japanese learning tools. My first [Next.js](https://nextjs.org/) project.
+A dashboard that glues together your favorite Japanese learning tools. My first [Next.js](https://nextjs.org/) project.
 
-# App Content
-Each Japanese service has its own tab in the UI. You'll find vocab cards, progress charts, and whatever else I could grab from the APIs.
+Tools are organized into tabs. You'll find vocab cards, progress charts, and whatever else I could grab from the APIs.
 
 There's also a self-hosted translation tool that uses [LibreTranslate](https://libretranslate.com/).
 
@@ -15,8 +14,7 @@ There's also a self-hosted translation tool that uses [LibreTranslate](https://l
 ### Translation Tab
 <img width="683" height="512" alt="translate_cap" src="https://github.com/user-attachments/assets/17ae8a57-e1a9-487c-a79a-de9626ab1ab0" /><br><br>
 
-
-# Setup
+## Setup
 1. Clone the project
 2. Build the Docker image from the project root
 ```shell
@@ -29,7 +27,7 @@ docker run -e "WANIKANI_API_KEY=<your_wanikani_token>" -e "BUNPRO_API_KEY=<your_
 4. Open the app at `http://localhost:3000`<br><br>
 
 
-# API Tokens
+## API Tokens
 These are unique strings that give you access to each service. Here's how to get them. 
 
 ### Wanikani
